@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Hosting;
+using System;
 using System.Threading;
 using tp01web;
 
@@ -8,8 +9,14 @@ namespace tp01web2
     {
         static void Main(string[] args)
         {
-            Author[] at = new Author[2];
-            Author a = new Author("Gabriel", "gabriel@paciencia", 'm');
+            IWebHost host = new WebHostBuilder()
+                .UseKestrel()
+                .UseStartup<Startup>()
+                .Build();
+            host.Run();
+
+            /*Author[] at = new Author[2];
+            Author a = new Author("Edu", "Edu@paciencia", 'm');
             Author a1 = new Author("eduardo", "Eduardo@eduardo", 'm');
             at.SetValue(a, 0);
             at.SetValue(a1, 1);
@@ -17,7 +24,7 @@ namespace tp01web2
             Console.WriteLine(b.ToString());
             
 
-            Console.ReadKey();
+            Console.ReadKey();*/
         }
     }
 }

@@ -1,0 +1,49 @@
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace tp01web2
+{
+    class Startup
+    {
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddRouting();
+        }
+        public void Configure(IApplicationBuilder app)
+        {
+            var builder = new RouteBuilder(app);
+            builder.MapRoute("/nomeLivro",BookNames);
+            builder.MapRoute("/TotalToString",TotalToString);
+            builder.MapRoute("/NomeDosAutores",NomeDosAutores);
+            var rotas = builder.Build();
+            app.UseRouter(rotas);
+        }
+        public Task BookNames(HttpContext context)
+        {
+            ArquivoCSV arq = new ArquivoCSV();
+            var books = arq.buscarNomes();
+            return context.Response.WriteAsync(books[0].Name);
+        }
+        public Task TotalToString (HttpContext context)
+        {
+            ArquivoCSV arq = new ArquivoCSV();
+            var books = arq.buscarNomes();
+            return context.Response.WriteAsync(books[0].ToString());
+
+        }
+        public Task NomeDosAutores(HttpContext context)
+        {
+            ArquivoCSV arq = new ArquivoCSV();
+            var books = arq.buscarNomes();
+            return context.Response.WriteAsync(books[0].getAuthorNames());
+
+        }
+        
+    }
+}

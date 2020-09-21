@@ -17,6 +17,11 @@ namespace tp01web
             this.Email = _email;
             this.Gender = _gender;
         }
+        public Author()
+        {
+            Email = "example@example";
+            Gender = 'm';
+        }
         
     }
     
