@@ -21,6 +21,7 @@ namespace tp01web2
             builder.MapRoute("/nomeLivro",BookNames);
             builder.MapRoute("/TotalToString",TotalToString);
             builder.MapRoute("/NomeDosAutores",NomeDosAutores);
+            builder.MapRoute("/livro/ApresentaLivro", GerarHtml);
             var rotas = builder.Build();
             app.UseRouter(rotas);
         }
@@ -44,6 +45,14 @@ namespace tp01web2
             return context.Response.WriteAsync(books[0].getAuthorNames());
 
         }
+        public Task GerarHtml(HttpContext context)
+        {
+            ArquivoCSV arq = new ArquivoCSV();
+            var books = arq.buscarNomes();
+            var pHtml = $"<div>{books[0].ToString()}</div>";
+            return context.Response.WriteAsync(pHtml);
+        }
+       
         
     }
 }
